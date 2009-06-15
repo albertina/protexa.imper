@@ -7,6 +7,10 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
+ <p>
+    <%= f.label :position, 'Posición' %><br />
+	<%= select_tag "page[position]", options_for_select(Page.find(:all, :order => :position).map {|p| [p.position.to_s + " - " + p.name, p.position]}, @page.position) %>
+  </p>
 <p>
     <%= f.label :Content, "Contenido" %><br />
     <%= f.text_area :content %>

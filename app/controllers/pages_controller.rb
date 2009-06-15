@@ -2,8 +2,8 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.xml
   def index
-    @pages = Page.find(:all)
-
+    @pages = Page.find(:all, :order => :position)
+	
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @pages }
@@ -41,7 +41,7 @@ class PagesController < ApplicationController
   # POST /pages.xml
   def create
     @page = Page.new(params[:page])
-
+    @page.new_position
     respond_to do |format|
       if @page.save
         flash[:notice] = 'Page was successfully created.'
@@ -58,6 +58,7 @@ class PagesController < ApplicationController
   # PUT /pages/1.xml
   def update
     @page = Page.find(params[:id])
+    @page.change_position(params[:page][:position])
 
     respond_to do |format|
       if @page.update_attributes(params[:page])
